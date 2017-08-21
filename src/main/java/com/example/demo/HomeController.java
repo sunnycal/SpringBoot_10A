@@ -53,10 +53,14 @@ public class HomeController {
         return "messageform";
 
     }
-
     @RequestMapping("/delete/{id}")
     public String delMessage(@PathVariable("id") long id) {
         messageRepository.delete(id);
         return "redirect:/";
     }
+    @RequestMapping("/login")
+    public String login(){
+        return "login";
+    }
+
 }

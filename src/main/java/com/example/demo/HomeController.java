@@ -9,7 +9,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
@@ -17,46 +16,47 @@ import javax.validation.Valid;
 @Controller
 public class HomeController {
 
-  @Autowired
-  CourseRepository courseRepository;
+    @Autowired
+    MessageRepository messageRepository;
 
-@RequestMapping("/")
-    public String listCourses(Model model){
-    model.addAttribute("courses", courseRepository.findAll());
-    return "list";
-        }
-
-        @GetMapping("/add")
-    public String courseForm(Model model){
-        model.addAttribute("course", new Course());
-        return "courseform";
-        }
-
-        @PostMapping("/process")
-    public String processForm(@Valid Course course, BindingResult result){
-        if (result.hasErrors()){
-            return "courseform";
-        }
-        courseRepository.save(course);
-        return "redirect:/";
-
-        }
-
-        @RequestMapping("/detail/{id}")
-    public String showCourse(@PathVariable("id") long id, Model model){
-        model.addAttribute("course", courseRepository.findOne(id));
-        return "show";
-        }
-
-    @RequestMapping("/update/{id}")
-    public String updateCourse(@PathVariable("id") long id, Model model){
-        model.addAttribute("course", courseRepository.findOne(id));
-        return "courseform";
-        }
-@RequestMapping("/delete/{id}")
-    public String delCourse(@PathVariable("id") long id){
-        courseRepository.delete(id);
-        return "redirect:/";
+    @RequestMapping("/")
+    public String listMessages(Model model) {
+        model.addAttribute("messages", messageRepository.findAll());
+        return "list";
     }
 
+    @GetMapping("/add")
+    public String messageForm(Model model) {
+        model.addAttribute("message", new Message());
+        return "messageform";
+    }
+
+    @PostMapping("/process")
+    public String processForm(@Valid Message message, BindingResult result) {
+        if (result.hasErrors()) {
+            return "messageform";
+        }
+        messageRepository.save(message);
+        return "redirect:/";
+
+   }
+
+    @RequestMapping("/detail/{id}")
+    public String showMessage(@PathVariable("id") long id, Model model) {
+        model.addAttribute("message", messageRepository.findOne(id));
+        return "show";
+    }
+
+    @RequestMapping("/update/{id}")
+    public String updateMessage(@PathVariable("id") long id, Model model) {
+        model.addAttribute("message", messageRepository.findOne(id));
+        return "messageform";
+
+    }
+
+    @RequestMapping("/delete/{id}")
+    public String delMessage(@PathVariable("id") long id) {
+        messageRepository.delete(id);
+        return "redirect:/";
+    }
 }
